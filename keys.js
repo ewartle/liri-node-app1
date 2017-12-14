@@ -12,7 +12,5 @@ module.exports = twitterKeys;
 
 
 
-Consumer Key (API Key)	unfOQWuDFgkNeumJYg18RQuRU
-Consumer Secret (API Secret)	mopiz5GF4IOnezrtKONhQCOjC6YBRuP7QmiRq4blhydoerhlKf
 
 
