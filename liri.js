@@ -1,13 +1,23 @@
+var Twitter = require("twitter");
 var twitterKeys1 = require("./keys.js");
+var client = new Twitter({
+    consumer_key: twitterKeys1.consumer_key, 
+    consumer_secret: twitterKeys1.consumer_secret,
+    access_token_key: twitterKeys1.access_token_key,
+    access_token_secret: twitterKeys1.access_token_secret,
+});
+
+var inquirer = require("inquirer");
 var request = require("request");
-var choice = (process.argv[2]);
-var name = (process.argv[3]);
 var fs = require("fs");
 var Spotify = require("node-spotify-api");
 var spotify = new Spotify({
     id: "f7b0e0105d8046a5a0146daa2b84ef58",
     secret: "12c5207bd73c4aeeaec5a333d4c02e76"
 });
+
+var choice = (process.argv[2]);
+var name = (process.argv[3]);
 
 
 function spotifyThisSong() {
@@ -24,20 +34,24 @@ function spotifyThisSong() {
                 return console.log('Error occurred: ' + error);
             } else {
 
-                var a = "The artist(s) name is: " + data.tracks.items[0].artists[0].name + ".";
-                var b = "The title of the song is: " + data.tracks.items[0].name + ".";
-                var c = "The song if from the following album:  " + data.tracks.items[0].album.name + ".";
-                var d = "The preview link to the song on spotify is: " + data.tracks.items[0].external_urls.spotify + ".";
+                console.log("The artist(s) name is: " + data.tracks.items[0].artists[0].name + ".");
+                console.log("The title of the song is: " + data.tracks.items[0].name + ".");
+                console.log("The song if from the following album:  " + data.tracks.items[0].album.name + ".");
+                console.log("The preview link to the song on spotify is: " + data.tracks.items[0].external_urls.spotify + ".\n");
 
-                var Response = a + "  " + b + "  " + c + "  " + d + " <br> <br> <br> ";
+                var z = "\n New Search: ";
+                var a = "\n The artist(s) name is: " + data.tracks.items[0].artists[0].name + ".";
+                var b = "\n The title of the song is: " + data.tracks.items[0].name + ".";
+                var c = "\n The song if from the following album:  " + data.tracks.items[0].album.name + ".";
+                var d = "\n The preview link to the song on spotify is: " + data.tracks.items[0].external_urls.spotify + ".\n";
 
-                fs.appendFile("./log.txt", Response, function(err) {
+                var Response = z + a + "  " + b + "  " + c + "  " + d + "\n";
 
-                    if (err) {
-                        console.log(err);
-                    } else {
-                        console.log("Content Added!");
-                    }
+                fs.appendFile("./log.txt", Response, function(error) {
+
+                    if (error) {
+                        console.log(error);
+                    } 
 
                 });
             }
@@ -49,23 +63,28 @@ function spotifyThisSong() {
 
         spotify.search({ type: 'track', query: nameString, limit: 1 }, function(error, data) {
             if (error) {
-                return console.log('Error occurred: ' + err);
+                return console.log('Error occurred: ' + error);
             } else {
 
-                var a = "The artist(s) name is: " + data.tracks.items[0].artists[0].name + ".";
-                var b = "The title of the song is: " + data.tracks.items[0].name + ".";
-                var c = "The song if from the following album:  " + data.tracks.items[0].album.name + ".";
-                var d = "The preview link to the song on spotify is: " + data.tracks.items[0].external_urls.spotify + ".";
+                console.log("The artist(s) name is: " + data.tracks.items[0].artists[0].name + ".");
+                console.log("The title of the song is: " + data.tracks.items[0].name + ".");
+                console.log("The song if from the following album:  " + data.tracks.items[0].album.name + ".");
+                console.log("The preview link to the song on spotify is: " + data.tracks.items[0].external_urls.spotify + ".\n");
 
-                var Response = a + "  " + b + "  " + c + "  " + d + " <br> <br> <br> ";
+                var z = "\n New Search: ";
+                var a = "\n The artist(s) name is: " + data.tracks.items[0].artists[0].name + ".";
+                var b = "\n The title of the song is: " + data.tracks.items[0].name + ".";
+                var c = "\n The song if from the following album:  " + data.tracks.items[0].album.name + ".";
+                var d = "\n The preview link to the song on spotify is: " + data.tracks.items[0].external_urls.spotify + ".\n";
 
-                fs.appendFile("./log.txt", Response, function(err) {
+                var Response = z + a + "  " + b + "  " + c + "  " + d + "\n";
 
-                    if (err) {
-                        console.log(err);
-                    } else {
-                        console.log("Content Added!");
-                    }
+
+                fs.appendFile("./log.txt", Response, function(error) {
+
+                    if (error) {
+                        console.log(error);
+                    } 
 
                 });
             }
@@ -87,26 +106,34 @@ function movieThis() {
 
             if (!error && response.statusCode === 200) {
 
-                var a = "The movie's title is: " + JSON.parse(body).Title + ".";
-                var b = "The movie's year of release is: " + JSON.parse(body).Year + ".";
-                var c = "The movie's imdbRating is: " + JSON.parse(body).imdbRating + ".";
-                var d = "The Rotten Tomatoes Rating of the movie is:  " + JSON.parse(body).Ratings[1].Value + "."
-                var e = "The movie was produced in: " + JSON.parse(body).Country + "."
-                var f = "The language of the movie is: " + JSON.parse(body).Language + "."
-                var g = "The plot of the movie is: " + JSON.parse(body).Plot;
-                var h = "The actors in the movie are: " + JSON.parse(body).Actors + "."
+                console.log("The movie's title is: " + JSON.parse(body).Title + ".");
+                console.log("The movie's year of release is: " + JSON.parse(body).Year + ".");
+                console.log("The movie's imdbRating is: " + JSON.parse(body).imdbRating + ".");
+                console.log("The Rotten Tomatoes Rating of the movie is:  " + JSON.parse(body).Ratings[1].Value + ".");
+                console.log("The movie was produced in: " + JSON.parse(body).Country + ".");
+                console.log("The language of the movie is: " + JSON.parse(body).Language + ".");
+                console.log("The plot of the movie is: " + JSON.parse(body).Plot);
+                console.log("The actors in the movie are: " + JSON.parse(body).Actors + ".\n");
 
-                var Response = a + "  " + b + "  " + c + "  " + d + "  " + e + "  " + f + "  " + g + "  " + h + " <br> <br> <br> ";
+                var z = "\n New Search: ";
+                var a = "\n The movie's title is: " + JSON.parse(body).Title + ".";
+                var b = "\n The movie's year of release is: " + JSON.parse(body).Year + ".";
+                var c = "\n The movie's imdbRating is: " + JSON.parse(body).imdbRating + ".";
+                var d = "\n The Rotten Tomatoes Rating of the movie is:  " + JSON.parse(body).Ratings[1].Value + ".";
+                var e = "\n The movie was produced in: " + JSON.parse(body).Country + ".";
+                var f = "\n The language of the movie is: " + JSON.parse(body).Language + ".";
+                var g = "\n The plot of the movie is: " + JSON.parse(body).Plot;
+                var h = "\n The actors in the movie are: " + JSON.parse(body).Actors + ".\n";
+
+                var Response = z + a + "  " + b + "  " + c + "  " + d + "  " + e + "  " + f + "  " + g + "  " + h + "\n";
 
 
 
-                fs.appendFile("./log.txt", Response, function(err) {
+                fs.appendFile("./log.txt", Response, function(error) {
 
-                    if (err) {
-                        console.log(err);
-                    } else {
-                        console.log("Content Added!");
-                    }
+                    if (error) {
+                        console.log(error);
+                    } 
 
                 });
             }
@@ -118,26 +145,32 @@ function movieThis() {
 
             if (!error && response.statusCode === 200) {
 
-                var a = "The movie's title is: " + JSON.parse(body).Title + ".";
-                var b = "The movie's year of release is: " + JSON.parse(body).Year + ".";
-                var c = "The movie's imdbRating is: " + JSON.parse(body).imdbRating + ".";
-                var d = "The Rotten Tomatoes Rating of the movie is:  " + JSON.parse(body).Ratings[1].Value + "."
-                var e = "The movie was produced in: " + JSON.parse(body).Country + "."
-                var f = "The language of the movie is: " + JSON.parse(body).Language + "."
-                var g = "The plot of the movie is: " + JSON.parse(body).Plot;
-                var h = "The actors in the movie are: " + JSON.parse(body).Actors + "."
+                console.log("The movie's title is: " + JSON.parse(body).Title + ".");
+                console.log("The movie's year of release is: " + JSON.parse(body).Year + ".");
+                console.log("The movie's imdbRating is: " + JSON.parse(body).imdbRating + ".");
+                console.log("The Rotten Tomatoes Rating of the movie is:  " + JSON.parse(body).Ratings[1].Value + ".");
+                console.log("The movie was produced in: " + JSON.parse(body).Country + ".");
+                console.log("The language of the movie is: " + JSON.parse(body).Language + ".");
+                console.log("The plot of the movie is: " + JSON.parse(body).Plot);
+                console.log("The actors in the movie are: " + JSON.parse(body).Actors + ".\n");
 
-                var Response = a + "  " + b + "  " + c + "  " + d + "  " + e + "  " + f + "  " + g + "  " + h + " <br> <br> <br>  ";
+                var z = "\n New Search: ";
+                var a = "\n The movie's title is: " + JSON.parse(body).Title + ".";
+                var b = "\n The movie's year of release is: " + JSON.parse(body).Year + ".";
+                var c = "\n The movie's imdbRating is: " + JSON.parse(body).imdbRating + ".";
+                var d = "\n The Rotten Tomatoes Rating of the movie is:  " + JSON.parse(body).Ratings[1].Value + "."
+                var e = "\n The movie was produced in: " + JSON.parse(body).Country + "."
+                var f = "\n The language of the movie is: " + JSON.parse(body).Language + "."
+                var g = "\n The plot of the movie is: " + JSON.parse(body).Plot;
+                var h = "\n The actors in the movie are: " + JSON.parse(body).Actors + ".\n"
 
+                var Response = z + a + "  " + b + "  " + c + "  " + d + "  " + e + "  " + f + "  " + g + "  " + h + "\n";
 
+                fs.appendFile("./log.txt", Response, function(error) {
 
-                fs.appendFile("./log.txt", Response, function(err) {
-
-                    if (err) {
-                        console.log(err);
-                    } else {
-                        console.log("Content Added!");
-                    }
+                    if (error) {
+                        console.log(error);
+                    } 
 
                 });
             }
@@ -171,9 +204,7 @@ function doWhatItSays() {
         var dataArr = data.split(",");
 
         if (dataArr[0] === "my-tweets") {
-            console.log("twitter");
-            console.log(twitterKeys1);
-            //myTweets();
+            myTweets();
         }
 
         if (dataArr[0] === "spotify-this-song") {
@@ -190,14 +221,38 @@ function doWhatItSays() {
     });
 }
 
-//function myTweets (){
+function myTweets() {
 
-//}
+    var params = { screen_name: '@LEE_2017_' };
+
+    client.get('statuses/user_timeline', params, function(error, tweets, response) {
+        if (!error) {
+            for (var i = 0; i < tweets.length; i++) {
+                console.log("\nHere is the text of my tweet: " + tweets[i].text + ". ");
+                console.log("The tweet was created: " + tweets[i].created_at + ". ");
+
+                var a = "\nHere is the text of my tweet: " + tweets[i].text + ". "
+                var b = "The tweet was created: " + tweets[i].created_at + ". "
+
+                var Response = a + b + "\n";
+
+                fs.appendFile("./log.txt", Response, function(err) {
+
+                    if (error) {
+                        console.log(error);
+                    } 
+
+                });
+
+
+            }
+        }
+    });
+
+}
 
 if (choice === "my-tweets") {
-    console.log("twitter");
-    console.log(twitterKeys1);
-    //myTweets();
+    myTweets();
 }
 
 if (choice === "spotify-this-song") {
